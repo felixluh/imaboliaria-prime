@@ -9,12 +9,12 @@ import { Observable, tap } from "rxjs";
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = 'http://localhost:2600';
+  private apiUrl = 'http://localhost:3000';
 
   constructor() { }
 
   login( email: string, senha: string): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrl}/usuarios?email=${email}$senha={senha}`).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}/usuarios?email=${email}&senha=${senha}`).pipe(
       tap(usuarios => {
         if (usuarios && usuarios.length > 0) {
           const usuario = usuarios[0];
@@ -48,8 +48,6 @@ export class AuthService {
   private redirectByRole(role: string): void {
     if (role === 'corretor') {
       this.router.navigate(['/dasbord']);
-    } else if (role == 'cliente') {
-      this.router.navigate(['/dashboard']);
     } else if (role === 'cliente') {
       this.router.navigate(['/meus-interesses']);
     }
